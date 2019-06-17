@@ -1,0 +1,68 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+  
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+```{r }
+library(leaflet)
+```
+
+
+
+## Best Places I've Camped In Wisconsin
+### __*Jim Maurer*__
+
+Click on the tent icon for the name of the park and a link to the parks website.
+
+
+
+<!--                                 lat         long
+New Glarus Woods State Park  42.78722, -89.62972     http://dnr.wi.gov/topic/parks/name/ngwoods/
+Flambeau River State Forest  45.73944, -90.74599     http://dnr.wi.gov/topic/StateForests/flambeauRiver/ 
+Penisula State Park          45.15833, -87.225       http://dnr.wi.gov/topic/parks/name/peninsula/
+Rock Island State Park       45.41667, -86.82083     http://dnr.wi.gov/topic/parks/name/rockisland/
+Amnicon Falls State Park     46.61,    -91.88972     http://dnr.wi.gov/topic/parks/name/amnicon/
+Kettle Moraine North         43.60139, -88.18417     http://dnr.wi.gov/topic/parks/name/kmn/
+Devils Lake State Park       43.43333, -89.7375      http://dnr.wi.gov/topic/parks/name/devilslake/
+Kettle Moraine South         42.87778, -88.52917     http://dnr.wi.gov/topic/parks/name/kms/
+Wyalusing State Park         42.99167, -91.12222     http://dnr.wi.gov/topic/parks/name/wyalusing/
+--> 
+
+
+```{r}
+tenticon <- makeIcon(
+iconUrl = 
+"tent-image.png",
+iconWidth = 31*215/230, iconHeight = 31,
+iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+campwiLatLong <- data.frame(
+lat = c(42.78722, 45.73944, 45.15833, 45.41667, 46.61, 43.60139, 43.43333, 42.87778,
+42.99167),
+lng = c(-89.62972, -90.74599, -87.225, -86.82083, -91.88972, -88.18417, -89.7375, 
+-88.52917, -91.12222))
+campwisites <- c(
+"<a href='http://dnr.wi.gov/topic/parks/name/ngwoods/'>New Glarus Woods</a>",
+"<a href='http://dnr.wi.gov/topic/StateForests/flambeauRiver/'>Flambeau River</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/peninsula/'>Penisula</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/rockisland/'>Rock Island</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/amnicon/'>Amnicon Falls</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/kmn/'>Kettle Moraine North</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/devilslake/'>Devils Lake</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/kms/'>Kettle Moraine South</a>",
+"<a href='http://dnr.wi.gov/topic/parks/name/wyalusing/'>Wyalusing</a>"  
+)
+campwiLatLong %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = tenticon, popup = campwisites)
+
+```
